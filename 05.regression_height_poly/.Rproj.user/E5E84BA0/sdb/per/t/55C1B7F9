@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "data {\n  int<lower=0> N;\n  vector<lower=0>[N] height;\n  vector<lower=0>[N] weight;\n  vector<lower=0>[N] weight_sq;\n}\n\nparameters {\n  real alpha;\n  real beta1;\n  real beta2;\n  real<lower=0> sigma;\n}\n\nmodel {\n  alpha ~ normal(170, 100);\n  beta1 ~ normal(0, 20);\n  beta2 ~ normal(0, 20);\n  sigma ~ cauchy(0, 20);\n\n  height ~ normal(alpha + beta1 * weight + beta2 * weight_sq, sigma);\n}\n\ngenerated quantities {\n  vector[N] height_bar;\n  for (n in 1:N) {\n      height_bar[n] = normal_rng(alpha + beta1 * weight[n] + beta2 * weight_sq[n], sigma);\n  }\n}\n",
+    "created" : 1476175077921.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2852651322",
+    "id" : "55C1B7F9",
+    "lastKnownWriteTime" : 1476175079,
+    "last_content_update" : 1476175079399,
+    "path" : "E:/Dropbox/BayesCog/05.regression_height_poly/_scripts/regression_height_poly2_model.stan",
+    "project_path" : "_scripts/regression_height_poly2_model.stan",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "stan"
+}

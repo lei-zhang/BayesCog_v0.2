@@ -1,0 +1,18 @@
+{
+    "contents" : "# =============================================================================\n#### Info #### \n# =============================================================================\n# binomial globe example\n#\n# Lei Zhang, UKE, Hamburg, DE\n# lei.zhang@uke.de\n#\n# Adapted from McElreath, 2016\n\n# =============================================================================\n#### Grid Approximation #### \n# =============================================================================\n# inits\np_start <- 0\np_end   <- 1\nn_grid  <- 50 # 100\nw <- 6\nN <- 9\n\n# define grid\np_grid <- seq( from = p_start , to = p_end , length.out = n_grid )\n\n# define prior\nprior <- rep(1 , n_grid)\n\n# compute likelihood at each value in grid\nlikelihood <- dbinom(w , size = N , prob = p_grid )\n\n# compute product of likelihood and prior\nunstd.posterior <- likelihood * prior\n\n# standardize the posterior, so it sums to 1\nposterior <- unstd.posterior / sum(unstd.posterior)\n\n# =============================================================================\n#### Plot #### \n# =============================================================================\nlibrary(ggplot2)\n\nmyconfig <- theme_bw(base_size = 20) +\n    theme(panel.grid.major = element_blank(),\n          panel.grid.minor = element_blank(),\n          panel.background = element_blank() )\n\ndf <- data.frame(p_grid=p_grid, posterior=posterior)\n\ng <- ggplot(df, aes(p_grid, posterior))\ng <- g + geom_line(size = 2) + geom_point(size = 5, shape = 21, fill='white')\ng <- g + myconfig + labs(x = 'probability of water', \n                         y = 'posterior probability', title = paste0(as.character(n_grid),' points'))\nprint(g)\n\nggsave(plot = g, \"_plots/binomial_grid.png\", width = 6, height = 4, type = \"cairo-png\", units = \"in\")\n",
+    "created" : 1476041577214.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3928747499",
+    "id" : "62C350D7",
+    "lastKnownWriteTime" : 1473243838,
+    "path" : "E:/teaching/BayesCog/binomial_globe/_scripts/binomial_globe_grid_master.R",
+    "project_path" : "_scripts/binomial_globe_grid_master.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

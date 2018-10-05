@@ -1,0 +1,18 @@
+{
+    "contents" : "# =============================================================================\n#### Info #### \n# =============================================================================\n# binomial globe example\n#\n# Lei Zhang, UKE, Hamburg, DE\n# lei.zhang@uke.de\n#\n# Adapted from McElreath, 2016\n\n# =============================================================================\n#### Construct Data #### \n# =============================================================================\n# clear workspace\nrm(list=ls(all=TRUE))\n\nw <- 6\nN <- 9\ndataList <- list(w=w, N=N)\n\n# =============================================================================\n#### Running Stan #### \n# =============================================================================\nlibrary(rstan)\nrstan_options(auto_write = TRUE)\noptions(mc.cores = 2)\n\nmodelFile <- '_scripts/binomial_globe_model.stan'\nnIter     <- 2000\nnChains   <- 4 \nnWarmup   <- floor(nIter/2)\nnThin     <- 1\n\ncat(\"Estimating\", modelFile, \"model... \\n\")\nstartTime = Sys.time(); print(startTime)\ncat(\"Calling\", nChains, \"simulations in Stan... \\n\")\n\nfit_globe <- stan(modelFile, \n                  data    = dataList, \n                  chains  = nChains,\n                  iter    = nIter,\n                  warmup  = nWarmup,\n                  thin    = nThin,\n                  init    = \"random\",\n                  seed    = 1450154626)\n\ncat(\"Finishing\", modelFile, \"model simulation ... \\n\")\nendTime = Sys.time(); print(endTime)  \ncat(\"It took\",as.character.Date(endTime - startTime), \"\\n\")\n\n# =============================================================================\n#### Model Summary and Diagnostics #### \n# =============================================================================\nprint(fit_globe)\n\nplot_trace_excl_warm_up <- stan_trace(fit_globe, pars = 'p', inc_warmup = F)\nplot_trace_incl_warm_up <- stan_trace(fit_globe, pars = 'p', inc_warmup = T)\nggsave(plot = plot_trace_excl_warm_up, \"_plots/trace_excl_warmup.png\", width = 6, height = 4, type = \"cairo-png\", units = \"in\")\nggsave(plot = plot_trace_incl_warm_up, \"_plots/trace_incl_warmup.png\", width = 6, height = 4, type = \"cairo-png\", units = \"in\")\n\nplot_dens_cmb <- stan_dens(fit_globe, separate_chains = F, fill = 'skyblue')\nplot_dens_sep <- stan_dens(fit_globe, separate_chains = T)\nggsave(plot = plot_dens_cmb, \"_plots/dens_cmb.png\", width = 6, height = 4, type = \"cairo-png\", units = \"in\")\nggsave(plot = plot_dens_sep, \"_plots/dens_sep.png\", width = 6, height = 4, type = \"cairo-png\", units = \"in\")\n\n## stan_plot(fit_globe, pars = 'p', show_density = T)\n",
+    "created" : 1476042794491.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3335646784",
+    "id" : "4EB5859C",
+    "lastKnownWriteTime" : 1473261497,
+    "path" : "E:/teaching/BayesCog/binomial_globe/_scripts/binomial_globe_main.R",
+    "project_path" : "_scripts/binomial_globe_main.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

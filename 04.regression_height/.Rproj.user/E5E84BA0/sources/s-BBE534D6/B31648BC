@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1538670202634.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "B31648BC",
+    "lastKnownWriteTime" : 1538670414,
+    "last_content_update" : 1538670414943,
+    "path" : "E:/teaching/BayesCog_2018/BayesCog_2018_materials/04.regression_height/_scripts/regression_height_main_master.R",
+    "project_path" : "_scripts/regression_height_main_master.R",
+    "properties" : {
+        "cursorPosition" : "22,7",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
