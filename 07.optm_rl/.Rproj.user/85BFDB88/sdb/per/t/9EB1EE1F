@@ -1,0 +1,17 @@
+{
+    "contents" : "data {\n  int<lower=1> nSubjects;\n  int<lower=1> nTrials;\n  int<lower=1,upper=2> choice[nSubjects, nTrials];     \n  real<lower=-1, upper=1> reward[nSubjects, nTrials]; \n}\n\ntransformed data {\n  vector[2] initV;  # initial values for V\n  initV <- rep_vector(0.0, 2);\n}\n\nparameters {\n  # group-level parameters\n  real lr_mu_raw; \n  real tau_mu_raw;\n  real<lower=0> lr_sd_raw;\n  real<lower=0> tau_sd_raw;\n  \n  # subject-level raw parameters\n  vector[nSubjects] lr_raw;\n  vector[nSubjects] tau_raw;\n}\n\ntransformed parameters {\n  vector<lower=0,upper=1>[nSubjects] lr;\n  vector<lower=0,upper=3>[nSubjects] tau;\n  \n  for (s in 1:nSubjects) {\n    lr[s]  <- Phi_approx( lr_mu_raw  + lr_sd_raw * lr_raw[s] );\n    tau[s] <- Phi_approx( tau_mu_raw + tau_sd_raw * tau_raw[s] ) * 3;\n  }\n}\n\n\nmodel {\n  lr_mu_raw  ~ normal(0,1);\n  tau_mu_raw ~ normal(0,1);\n  lr_sd_raw  ~ cauchy(0,3);\n  tau_sd_raw ~ cauchy(0,3);\n  \n  lr_raw  ~ normal(0,1);\n  tau_raw ~ normal(0,1);\n  \n  for (s in 1:nSubjects) {\n    vector[2] v; \n    real pe;    \n    v <- initV;\n\n    for (t in 1:nTrials) {        \n      choice[s,t] ~ categorical_logit( tau[s] * v );\n      \n      //print(\"s = \", s, \", t = \", t, \", v = \", v);\n      \n      pe <- reward[s,t] - v[choice[s,t]];      \n      v[choice[s,t]] <- v[choice[s,t]] + lr[s] * pe; \n    }\n  }    \n}\n\ngenerated quantities {\n  real<lower=0,upper=1> lr_mu; \n  real<lower=0,upper=3> tau_mu;\n  \n  lr_mu  <- Phi_approx(lr_mu_raw);\n  tau_mu <- Phi_approx(tau_mu_raw) * 3;\n}\n",
+    "created" : 1474452811109.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "780639335",
+    "id" : "9EB1EE1F",
+    "lastKnownWriteTime" : 1474453668,
+    "path" : "E:/teaching/BayesCog/optm_rl/_scripts/reinforcement_learning_mp_hrch_optm_model.stan",
+    "project_path" : "_scripts/reinforcement_learning_mp_hrch_optm_model.stan",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "stan"
+}
