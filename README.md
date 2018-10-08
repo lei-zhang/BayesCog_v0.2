@@ -11,6 +11,7 @@ This repository contains all materials (slides & codes) from my *BayesCog_2018* 
 
 Folder | Task | Model
 -----  | ---- | ----
+00.cheatsheet |NA | NA
 01.R_basics |NA | NA
 02.binomial_globe | Globe toss | Binomial Model
 03.bernoulli_coin | Coin flip  | Bernoulli Model
