@@ -1,4 +1,6 @@
-This repository contains all materials (slides & codes) from my *BayesCog_2018* workshop. 
+This repository contains all materials (slides & codes) from my *BayesCog_v0.2* workshop. <br />
+UKE, Hamburg, 2018
+
 
 ### What's new:
  - Unpack reinforcement learning model
